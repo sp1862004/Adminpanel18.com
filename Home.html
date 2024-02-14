@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="bootstrapcss/bootstrap.min.css">
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="chartcss.css">
+  <script src="index.global.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'multiMonthYear,dayGridMonth,timeGridWeek'
+    },
+    initialView: 'multiMonthYear',
+    initialDate: '2023-01-12',
+    editable: true,
+    selectable: true,
+    dayMaxEvents: true, // allow "more" link when too many events
+    // multiMonthMaxColumns: 1, // guarantee single column
+    // showNonCurrentDates: true,
+    // fixedWeekCount: false,
+    // businessHours: true,
+    // weekends: false,
+    events: [
+      {
+        title: 'All Day Event',
+        start: '2023-01-01'
+      },
+      {
+        title: 'Long Event',
+        start: '2023-01-07',
+        end: '2023-01-10'
+      },
+      {
+        groupId: 999,
+        title: 'Repeating Event',
+        start: '2023-01-09T16:00:00'
+      },
+      {
+        groupId: 999,
+        title: 'Repeating Event',
+        start: '2023-01-16T16:00:00'
+      },
+      {
+        title: 'Conference',
+        start: '2023-01-11',
+        end: '2023-01-13'
+      },
+      {
+        title: 'Meeting',
+        start: '2023-01-12T10:30:00',
+        end: '2023-01-12T12:30:00'
+      },
+      {
+        title: 'Lunch',
+        start: '2023-01-12T12:00:00'
+      },
+      {
+        title: 'Meeting',
+        start: '2023-01-12T14:30:00'
+      },
+      {
+        title: 'Happy Hour',
+        start: '2023-01-12T17:30:00'
+      },
+      {
+        title: 'Dinner',
+        start: '2023-01-12T20:00:00'
+      },
+      {
+        title: 'Birthday Party',
+        start: '2023-01-13T07:00:00'
+      },
+      {
+        title: 'Click for Google',
+        url: 'http://google.com/',
+        start: '2023-01-28'
+      }
+    ]
+  });
+
+  calendar.render();
+});
+  </script>
+<style>
+     #wrapper {
+    padding-top: 20px;
+    padding-left: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.1);
+    max-width: 650px;
+    margin: 35px auto;
+  }
+  #chart-line {
+    position: relative;
+    margin-top: -40px;
+  }
+
+  /* calendar css  */
+  #calendar {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendarsecond {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+</style>
+
+  <script>
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+      )
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+      )
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+      )
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script>
+    // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+    // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+    var _seed = 42;
+    Math.random = function() {
+      _seed = _seed * 16807 % 2147483647;
+      return (_seed - 1) / 2147483646;
+    };
+  </script>
+
+  <script>
+function generateDayWiseTimeSeries(baseval, count, yrange) {
+  var i = 0;
+  var series = [];
+  while (i < count) {
+    var x = baseval;
+    var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+
+    series.push([x, y]);
+    baseval += 86400000;
+    i++;
+  }
+  return series;
+}
+var data = generateDayWiseTimeSeries(new Date('11 Feb 2017').getTime(), 185, {
+  min: 30,
+  max: 90
+})
+</script>
+</head>
+
+<body id="indx">
+  <!-- header(navbar) start -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <i class="fa-solid fa-user-pen" id="logo"></i>
+      <a class="navbar-brand mx-2" href="#">DarkPan</a>
+      <input class="form-control me-2 mx-3" id="search" type="search" placeholder="Search" aria-label="Search">
+    </div>
+
+    <div class="container-fluid manu">
+      <div class="A mx-3">
+      <div class="circal mt-1 ">
+        <i class="fa-solid fa-envelope" id="mail"></i>
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="font-size: 18px; color: gray;">
+            Message
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item " href="#">Action</a></li>
+            <li><a class="dropdown-item " href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="A mx-3">
+      <div class="circal  mt-1">
+        <i class="fa-solid fa-bell" id="mail"></i>
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="font-size: 18px; color: gray;">
+            Notificatin
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item " href="#">Action</a></li>
+            <li><a class="dropdown-item " href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="A mx-3">
+      <div class="circal  mt-1">
+        <img src="img/IMG_20221205_100307_549.jpg" id="foto" alt="">
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="font-size: 18px; color: gray;">
+            SHAILESH PATEL
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item " href="#">Action</a></li>
+            <li><a class="dropdown-item " href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+  <!-- header(navbar) end -->
+  <!-- slide bar manu start -->
+  <div id="sidebar">
+    <div class="A ">
+      <div class="circal  mt-1">
+        <img src="img/IMG_20221205_100307_549.jpg" id="foto" alt="">
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="font-size: 18px; color: gray;">
+            SHAILESH PATEL
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item " href="#">Action</a></li>
+            <li><a class="dropdown-item " href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <ul id="part">
+      <li id="inpart">
+        <div class="circal  mt-1">
+          <i class="fa-solid fa-house" id="mail"></i>
+        </div>
+        <a href="">Home</a></li>
+      <br>
+      <li id="inpart">
+        <div class="circal  mt-1">
+          <i class="fa-solid fa-compass" id="mail"></i>
+        </div>
+        <a href="">Dashboard</a></li>
+      <br>
+      <li id="inpart">
+        <div class="circal  mt-1">
+          <i class="fa-solid fa-list" id="mail"></i>
+        </div>
+        <a href="">Tables</a></li>
+      <br>
+      <li id="inpart">
+        <div class="circal  mt-1">
+          <i class="fa-solid fa-chart-column" id="mail"></i>
+        </div>
+        <a href="">Charts</a></li>
+    </ul>
+     <br>
+     <div class="A mx-3">
+      <div class="circal  mt-1 mx-2">
+        <i class="fa-solid fa-gear" id="mail"></i>
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="font-size: 18px; color: gray;">
+            Settings
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="sidebar-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <!-- slide bar manu end -->
+  <!-- sale and revenu start -->
+     <div class="container-fluid pt-4 px-4" >
+      <div class="row g-4" style="flex-wrap: wrap; display: flex;">
+        <div class="col-sm-6 col-xl-3 " id="step2">
+          <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 " id="second">
+            <i class="fa fa-chart-line fa-3x text-primary" id="sale"></i>
+            <div class="ms-3">
+              <p class="mb-2" id="textmd2">Today Sale</p>
+              <h6 class="mb-0" id="textmd">$1325</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3 " id="step2">
+          <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 " id="second">
+            <i class="fa fa-chart-bar fa-3x text-primary" id="sale"></i>
+            <div class="ms-3">
+              <p class="mb-2" id="textmd2">Today Sale</p>
+              <h6 class="mb-0" id="textmd">$5628</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3 " id="step2">
+          <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 " id="second">
+            <i class="fa fa-chart-area fa-3x text-primary" id="sale"></i>
+            <div class="ms-3">
+              <p class="mb-2" id="textmd2">Today Revenu</p>
+              <h6 class="mb-0" id="textmd">$23568</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3 " id="step2">
+          <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 " id="second">
+            <i class="fa fa-chart-pie fa-3x text-primary" id="sale"></i>
+            <div class="ms-3">
+              <p class="mb-2" id="textmd2">Today Revenu</p>
+              <h6 class="mb-0" id="textmd">$85642</h6>
+            </div>
+          </div>
+        </div> 
+      </div>
+      </div>  
+      <br>
+  <!-- sale and revenu end -->
+  <!-- table start -->
+  <div class="container">
+  <table class="table table-dark table-striped ">
+    <thead>
+      <tr>
+        <th scope="col">Sr.</th>
+        <th scope="col">name</th>
+        <th scope="col">Product</th>
+        <th scope="col">Sale</th>
+        <th scope="col">Total Day</th>
+        <th scope="col">Revenu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Shailesh</td>
+        <td>Plote</td>
+        <td>5 Plote</td>
+        <td>2 day</td>
+        <td>$980000</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Arnav</td>
+        <td>Car</td>
+        <td>2 car</td>
+        <td>1 day</td>
+        <td>$55000</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Babbulal</td>
+        <td>Bicycle</td>
+        <td>1000 Bicycle</td>
+        <td>7 day</td>
+        <td>$23000</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>Rameslal</td>
+        <td>Dimand</td>
+        <td>8 Dimand</td>
+        <td>2 day</td>
+        <td>$54000</td>
+      </tr>
+      <tr>
+        <th scope="row">5</th>
+        <td>Sureshlal</td>
+        <td>Gold Jewelry</td>
+        <td>6 Set</td>
+        <td>7 day</td>
+        <td>$73000</td>
+      </tr>
+      <tr>
+        <th scope="row">6</th>
+        <td>Manulal</td>
+        <td>B coins</td>
+        <td>10 Plote</td>
+        <td>2 day</td>
+        <td>$408000</td>
+      </tr>
+      <tr>
+        <th scope="row">7</th>
+        <td>Rupani</td>
+        <td>Cargo plane</td>
+        <td>1 Cargo plane</td>
+        <td>2 day</td>
+        <td>$59000</td>
+      </tr>
+      <tr>
+        <th scope="row">8</th>
+        <td>Kevin</td>
+        <td>Apartment</td>
+        <td>10 Apartment</td>
+        <td>7 day</td>
+        <td>$670000</td>
+      </tr>
+      <tr>
+        <th scope="row">9</th>
+        <td>Deny</td>
+        <td>Fitar jet</td>
+        <td>1 Fitar jet</td>
+        <td>1 day</td>
+        <td>$84000</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <!-- table end -->
+  <!-- chart and graph start -->
+  <div id="wrapper" style="background-color:  rgb(25, 28, 36);">
+    <div id="chart-line2"></div>
+    <div id="chart-line"></div>
+  </div>
+<script>
+   var options = {
+      series: [{
+      data: data
+    }],
+      chart: {
+      id: 'chart2',
+      type: 'line',
+      height: 230,
+      toolbar: {
+        autoSelected: 'pan',
+        show: false
+      }
+    },
+    colors: ['#546E7A'],
+    stroke: {
+      width: 3
+    },
+    dataLabels: {
+      enabled: false
+    },
+    fill: {
+      opacity: 1,
+    },
+    markers: {
+      size: 0
+    },
+    xaxis: {
+      type: 'datetime'
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart-line2"), options);
+    chart.render();
+  
+    var optionsLine = {
+      series: [{
+      data: data
+    }],
+      chart: {
+      id: 'chart1',
+      height: 130,
+      type: 'area',
+      brush:{
+        target: 'chart2',
+        enabled: true
+      },
+      selection: {
+        enabled: true,
+        xaxis: {
+          min: new Date('19 Jun 2017').getTime(),
+          max: new Date('14 Aug 2017').getTime()
+        }
+      },
+    },
+    colors: ['#008FFB'],
+    fill: {
+      type: 'gradient',
+      gradient: {
+        opacityFrom: 0.91,
+        opacityTo: 0.1,
+      }
+    },
+    xaxis: {
+      type: 'datetime',
+      tooltip: {
+        enabled: false
+      }
+    },
+    yaxis: {
+      tickAmount: 2
+    }
+    };
+
+    var chartLine = new ApexCharts(document.querySelector("#chart-line"), optionsLine);
+    chartLine.render();
+  </script>
+<!-- chart and graph end -->
+<!-- calander start -->
+<div id="calendar">
+  <div id='calendarsecond'></div>
+</div>
+<!-- calander end -->
+<!-- Footer start -->
+  <div class="container-flued pt-4 px-4" >
+    <div class="bg-secondary rounded-top p-4" id="fotor">
+      <div class="row">
+        <div class="col-12 col-sm-6 text-center text-sm-start" id="fotor">
+          © Copywrite by,
+        </div>
+        <div class="col-12 col-sm-6 text-center text-sm-end" id="fotor">
+          SHAILESH PATEL
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Footer end -->
+</body>
+</html>
+<script src="Jqury/jqury"></script>
+<script>
+ $(document).ready(function() {
+  $('#sidebar-btn').on('click', function() {
+    $('#sidebar').toggleClass('visible');
+  });
+});
+</script>
+

@@ -1,0 +1,182 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    padding-left: var(--bs-gutter-x, .0rem);
+}
+/* LOGIN form start */
+
+#firstpage{
+    background-color: whitesmoke;
+    height: 500px;
+    border-radius: 20px;
+    width: 650px;
+}
+#login{
+    height: 50px;
+    width: 80px;
+    /* background-color: red; */
+    color: white;
+    border-radius: 50px;
+}
+/* LOGIN form end */
+#indx{
+    background-color: black;
+}
+/* header(navbar) start  */
+.navbar{
+    background-color: rgb(25, 28, 36) !important;
+}
+#logo{
+    font-size: 30px;
+    color: red;
+}
+.navbar-brand{
+    font-size: 1.75rem;
+    color: rgb(235, 22, 22) !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.container-fluid{
+    justify-content: start!important;
+
+}
+#search{
+    width: 200px;
+    background-color: black;
+    color: gray;
+    border: none;
+}
+.manu{
+    justify-content: right!important;
+}
+.A{
+    display: flex;
+}
+.circal{
+    height: 35px;
+    width: 35px;
+    background-color: black;
+    border-radius: 50px;
+    
+}
+#mail{
+    font-size: 18px;
+    color: gray;
+    padding-top: 9px;
+    padding-left: 9px;
+}
+#foto{
+    height: 33px;
+    width: 33px;
+    border-radius: 50px;
+    
+}
+.dropdown-item {
+    color: gray;
+}
+.dropdown-divider{
+    color: gray;
+}
+/* header(navbar) end */
+/* slide bar manu start */
+#sidebar {
+    width: 200px;
+    background: rgb(25, 28, 36);
+    position: absolute;
+    height: 100%;
+    top: 58px;
+    left: -200px;
+    transition: left 0.5s ease;
+  }
+  
+  #sidebar.visible {
+    left: 0px;
+    transition: left 0.7s ease;
+  }
+  
+  #part {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #inpart{
+    list-style: none;
+    padding: 10px 0 10px 10px;
+    background: rgb(99, 1, 1);
+    border-bottom: 1px solid #233140;
+    display: flex;
+    
+  }
+  
+  #inpart a {
+    text-decoration: none;
+    color: gray;
+    padding-top: 10px;
+    padding-left: 5px;
+  }
+  
+  #sidebar-btn {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 15px;
+    cursor: pointer;
+    margin: 20px;
+    position: absolute;
+    right: -60px;
+    top: 0px;
+  }
+  
+  #sidebar-btn span {
+    background-color: white;
+    height: 1px;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  #sidebar-btn span:nth-child(2) {
+    width: 75%;
+  }
+  
+  .love {
+    width: 100%;
+    height: 100%;
+  }
+  
+  
+/* slide bar manu end */
+/* sale and revenu start */
+#sale{
+    font-size: 3em;
+    color: #EB1616!important;
+}
+#textmd2{
+    font-size: 20px;
+    color: gray;
+}
+#textmd{
+    color: white;
+    
+}
+
+/* #step2{
+   width: 24%;
+} */
+#second {
+    background-color: rgb(25, 28, 36)!important;
+    border-radius: 20px!important;
+    
+}
+/* sale and revenu end */
+/* table start */
+
+/* table end */
+/* Footer start  */
+#fotor{
+    background-color: rgb(25, 28, 36) !important;
+    color: gray;
+}
+/* Footer end */
